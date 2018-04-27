@@ -10,4 +10,14 @@ Types::QueryType = GraphQL::ObjectType.define do
       "Hello World!"
     }
   end
+
+  field :me, Types::UserType do
+    description "the current user"
+    resolve -> (obj, args, ctx) { User.first }
+  end
+
+  field :projects, types[Types::ProjectType] do
+    description "the projects of the user"
+    resolve -> (obj, args, ctx) { Project.all }
+  end
 end
